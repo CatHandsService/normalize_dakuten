@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="./templates", static_folder="./static")
 origins = [
     "https://normalize-dakuten-jzlg.vercel.app",
     "http://localhost:5173",
