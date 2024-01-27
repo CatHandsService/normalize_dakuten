@@ -6,7 +6,8 @@ import unicodedata
 import os
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "http://localhost:4173", "https://normalize-dakuten-jzlg-f6ltf5dg9-cathandsservice.vercel.app/"])
+CORS(app, origins="*")
+# CORS(app, origins=["http://localhost:5173", "http://localhost:4173", "https://normalize-dakuten-jzlg-f6ltf5dg9-cathandsservice.vercel.app/"])
 # app = Flask(__name__, template_folder='../front/dist/', static_folder='../front/dist/assets/')
 
 # セキュリティヘッダーの設定
