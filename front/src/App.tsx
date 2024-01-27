@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import './App.css'
 import { Header } from './components/Header'
 import { ImportFile } from './components/ImportFile'
@@ -6,6 +7,7 @@ function App() {
 
   return (
     <div className='main'>
+      <Helmet />
       <Header />
       <div className='container'>
         <ImportFile />
