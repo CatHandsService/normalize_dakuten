@@ -52,7 +52,7 @@ export const ImportFile = () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const response = await fetch('http://localhost:5000/upload', {
+        const response = await fetch('http://0.0.0.0:10000/upload', {
             method: 'POST',
             mode: 'cors',
             body: formData,
