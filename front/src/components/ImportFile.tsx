@@ -52,7 +52,7 @@ export const ImportFile = () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const corsAddress = 'https://vercel.com/cathandsservice/normalize-dakuten-back/7CHbnhDLL2SVM9tUf5WcttG175Kv';
+        const corsAddress = 'https://normalize-dakuten-back-kerprg40w-cathandsservice.vercel.app/upload';
 
         const response = await fetch(corsAddress, {
             method: 'POST',
