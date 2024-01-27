@@ -52,9 +52,9 @@ export const ImportFile = () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const corsAddress = 'https://normalize-dakuten-back.vercel.app/upload';
+        const corsOrigin = 'https://normalize-dakuten-back.vercel.app/upload';
 
-        const response = await fetch(corsAddress, {
+        const response = await fetch(corsOrigin, {
             method: 'POST',
             mode: 'cors',
             body: formData,
