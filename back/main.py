@@ -52,7 +52,7 @@ def normalize_data(file):
 # def Home():
 #     return render_template('index.html'), 200
 
-@app.route('/', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 @cross_origin()
 def handle_upload():
     try:
