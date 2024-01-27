@@ -6,7 +6,7 @@ import unicodedata
 import os
 
 app = Flask(__name__)
-CORS(app, origins=["https://normalize-dakuten-jzlg.vercel.app"])
+CORS(app, origins=["https://normalize-dakuten-jzlg.vercel.app", "http://localhost:5173"])
 # CORS(app, origins=["http://localhost:5173", "http://localhost:4173", "https://normalize-dakuten-jzlg.vercel.app/"])
 # app = Flask(__name__, template_folder='../front/dist/', static_folder='../front/dist/assets/')
 
@@ -62,7 +62,7 @@ def handle_upload():
             filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(filename)
             # ファイルの内容をPandasデータフレームに変換
-            df = pd.read_excel(file, index_col=None, header=None)
+            df = pd.read_excel(filename, index_col=None, header=None)
             # ファイルの内容をunicodedataで正規化
             df_normalized = df.applymap(lambda x: normalize_data(x) if pd.notna(x) else x)
             # 正規化されたファイル名を生成
