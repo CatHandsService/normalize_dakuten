@@ -1,5 +1,5 @@
 import re
-from flask import Flask, jsonify, request, send_file, send_from_directory
+from flask import Flask, jsonify, render_template, request, send_file, send_from_directory
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import unicodedata
@@ -7,6 +7,7 @@ import os
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173", "http://localhost:4173"])
+# app = Flask(__name__, template_folder='../front/dist/', static_folder='../front/dist/assets/')
 
 # セキュリティヘッダーの設定
 @app.after_request
@@ -46,6 +47,9 @@ def normalize_data(file):
     # 正規化
     file = unicodedata.normalize("NFC", file)
     return file
+# @app.route('/')
+# def Home():
+#     return render_template('index.html'), 200
 
 @app.route('/upload', methods=['POST'])
 @cross_origin()

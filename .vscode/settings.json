@@ -4,6 +4,7 @@
     "Dakuten",
     "jsonify",
     "notna",
+    "tenplate",
     "werkzeug"
   ]
 }
