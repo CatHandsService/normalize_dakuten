@@ -11,6 +11,7 @@ load_dotenv(override=True)
 
 app = Flask(__name__, template_folder="./templates", static_folder="./static")
 origins = [
+    "https://normalize-dakuten-jzlg-5i3lf0ztl-cathandsservice.vercel.app/",
     "https://normalize-dakuten-jzlg.vercel.app",
     "http://localhost:5173",
 ]
