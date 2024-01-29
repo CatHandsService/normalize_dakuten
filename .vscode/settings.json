@@ -3,9 +3,12 @@
     "applymap",
     "Dakuten",
     "dotenv",
+    "gunicorn",
     "jsonify",
     "notna",
+    "openpyxl",
     "tenplate",
-    "werkzeug"
+    "werkzeug",
+    "xlrd"
   ]
 }

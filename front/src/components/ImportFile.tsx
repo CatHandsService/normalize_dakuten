@@ -19,23 +19,23 @@ export const ImportFile = () => {
     if (validateFile(file)) {
       // バリデーションが通れば、ここで必要な処理を実行
       setErrorMessage("");
-      setValidMessage('The file is a file that can be handled by Excel.');
-      console.log('The file is a file that can be handled by Excel.');
+      setValidMessage('The file is a file that can be handled.');
     } else {
       // バリデーションが通らない場合はエラーメッセージを表示などの処理を実行
-      console.error('This file cannot be handled by Excel.');
-      // window.confirm("This file cannot be handled by Excel.");
+      console.error('This file cannot be handled.');
+      // window.confirm("This file cannot be handled");
       setValidMessage("");
-      setErrorMessage("This file cannot be handled by Excel.");
+      setErrorMessage("This file cannot be handled.");
       // setSelectedFile(null);
       // setFileName('');
     }
   }, []);
 
   const validateFile = (file: File): boolean => {
-    // エクセルで取り扱えるかのバリデーションロジックをここに実装
-    // 例として、拡張子がxlsxの場合にtrueを返すものとします
-    return file.name.toLowerCase().endsWith('.xlsx');
+    const allowedExtensions = ['.xlsx', '.xls', '.csv'];
+    const lowerCaseFileName = file.name.toLowerCase();
+
+    return allowedExtensions.some(ext => lowerCaseFileName.endsWith(ext));
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -52,9 +52,9 @@ export const ImportFile = () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const corsOrigin = 'https://normalize-dakuten-back.vercel.app/upload';
+        const corsOrigin = 'https://localhost:5000';
 
-        const response = await fetch(corsOrigin, {
+        const response = await fetch(`${corsOrigin}/upload`, {
             method: 'POST',
             mode: 'cors',
             body: formData,
@@ -74,6 +74,8 @@ export const ImportFile = () => {
           // 不要な要素を削除
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
+          // ファイル名をクリア
+          setFileName('');
         } else {
             console.error('Failed to upload file.');
         }

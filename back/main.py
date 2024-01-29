@@ -1,6 +1,6 @@
 import re
 from flask import Flask, render_template, request, send_file
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import pandas as pd
 import unicodedata
 import os
@@ -53,7 +53,7 @@ def Home():
     return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
-# @cross_origin()
+@cross_origin()
 def handle_upload():
     try:
         file = request.files['file']
@@ -61,19 +61,31 @@ def handle_upload():
             # アップロードされたファイルを保存
             filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(filename)
-            # ファイルの内容をPandasデータフレームに変換
-            df = pd.read_excel(filename, index_col=None, header=None)
-            # ファイルの内容をunicodedataで正規化
-            df_normalized = df.applymap(lambda x: normalize_data(x) if pd.notna(x) else x)
+
             # 正規化されたファイル名を生成
             re_prefixed_filename = f"re.{file.filename}"
+
+            # ファイルの内容をPandasデータフレームに変換
+            if re_prefixed_filename.endswith(('.xls', '.xlsx')):
+                df = pd.read_excel(filename, engine='openpyxl', index_col=None, header=None)
+            elif re_prefixed_filename.endswith('.csv'):
+                df = pd.read_csv(filename, header=None, encoding='shift_jis')
+
+            # ファイルの内容をunicodedataで正規化
+            df_normalized = df.applymap(lambda x: normalize_data(x) if pd.notna(x) else x)
+
             # ファイルを正規化されたファイル名で保存
             re_prefixed_filepath = os.path.join(app.config['UPLOAD_FOLDER'], re_prefixed_filename)
-            df_normalized.to_excel(re_prefixed_filepath, index=False, header=False)
+            if re_prefixed_filename.endswith(('.xls', '.xlsx')):
+                df_normalized.to_excel(re_prefixed_filepath, index=False, header=False)
+            elif re_prefixed_filename.endswith('.csv'):
+                df_normalized.to_csv(re_prefixed_filepath, index=False, header=False, encoding='utf-8-sig')
+
+            os.remove(filename)
             # 正規化されたファイルを直接レスポンスの本文に含めて返す
             return send_file(re_prefixed_filepath, as_attachment=True)
     except Exception as e:
         return str(e), 400
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=5000)
