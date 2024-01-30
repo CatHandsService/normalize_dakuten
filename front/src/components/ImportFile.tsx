@@ -52,7 +52,7 @@ export const ImportFile = () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const corsOrigin = 'https://normalizedakuten-back-bs9wwrts9-cathandsservice.vercel.app';
+        const corsOrigin = 'https://normalizedakuten-back.vercel.app/';
 
         const response = await fetch(`${corsOrigin}/upload`, {
             method: 'POST',
